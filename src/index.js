@@ -15,21 +15,26 @@ const store = configureStore({
   }
 });
 console.log('store',store);
-console.log('BEFORE STATE',store.getState());
 
-store.dispatch({
-  type : 'ADD_MOVIES',
-  movies : [ { name : 'Superman' } ]
-});
 
-console.log('AFTER STATE',store.getState());
+// console.log('BEFORE STATE',store.getState());
+
+// store.dispatch({
+//   type : 'ADD_MOVIES',
+//   movies : [ { name : 'Superman' } ]
+// });
+
+// console.log('AFTER STATE',store.getState());
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    {/* taking data from store prop rather than data.js file */}
+    <App store = { store }/>  
   </React.StrictMode>
 );
+
+// ReactDOM.render(<App store={store}/>,document.getElementById('root'));
 
 
