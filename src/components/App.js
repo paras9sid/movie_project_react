@@ -8,7 +8,7 @@ import { addMovies } from '../actions';
 class App extends React.Component {
   componentDidMount(){
     const { store } = this.props;
-    store.subscribe(()=>{
+    store.subscribe(() => {
       console.log('UPDATED');
       this.forceUpdate();
     });
@@ -28,8 +28,21 @@ class App extends React.Component {
 
     console.log('STATE',this.props.store.getState());
   }
-  render(){
-    const movies = this.props.store.getState();
+
+  isMovieFavourite = (movie) => {
+    const {favourites} = this.props.store.getState();
+
+    const index = favourites.indexOf(movie);
+
+    if(index !== -1){
+      //found the movie
+      return true;
+    }
+    return false;
+  }
+ render(){
+    const { list } = this.props.store.getState(); //now reducer file {lsit:[] , favourites:[] }
+    console.log('RENDER',this.props.store.getState());
     return (
       <div className="App">
         <Navbar />
@@ -40,11 +53,15 @@ class App extends React.Component {
           </div>
 
           <div className="list">
-
-            {/* {data.map((movie,index) =>( */}
-            {movies.map((movie,index) =>(
-              <MovieCard movie={movie} key = {`movies-${index}`}/>
+            {list.map(movie,index => (
+              <MovieCard 
+                movie={movie}
+                key = {`movies-${index}`}
+                dispatch = {this.props.store.dispatch}
+                isFavourite = {this.isMovieFavourite(movie)}
+          />  
             ))}
+            
 
           </div>
         </div>
